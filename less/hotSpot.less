@@ -2,21 +2,35 @@
   .hotSpot-item {
     position: absolute;
     display: block;
-    background-color: @item-text-color;
     color: @item-text-color;
-    border-radius: 50%;
+    border: 4px solid @item-border-color;
     z-index: 100;
     cursor: pointer;
 
-    .hotSpot-graphic-pin-icon {
-      color: @item-color;
-      font-size: (@icon-size*2);
-      width: auto;
-      height: auto;
+    .hotSpot-graphic-pin {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      width: 48px;
+      height: 48px;
+      background-color: @item-text-color;
+      border: inherit;
+      border-radius: 50%;
+
+      .hotSpot-graphic-pin-icon {
+        color: @item-color;
+        font-size: (@icon-size*2);
+        width: auto;
+        height: auto;
+      }
     }
 
     &.selected {
         color: @secondary-color;
+        border: @secondary-color 4px solid;
         content:" "; /*IE8 fix*/
       .hotSpot-graphic-pin-icon {
         color: inherit;
@@ -33,11 +47,10 @@
   position: relative;
 
   &.show-user-answer {
-    .hotSpot-item-icon {
-    }
     .incorrect {
       &.selected {
         color:@icon-incorrect-color;
+        border:@icon-incorrect-color 4px solid;
         content:"  "; /*IE8 fix*/
         .hotSpot-graphic-pin-icon {
           color: inherit;
@@ -46,6 +59,7 @@
 
       &.not-selected {
         color:@item-disabled-color;
+        border:@item-disabled-color 4px solid;
         content:"   "; /*IE8 fix*/
         .hotSpot-graphic-pin-icon {
           color: inherit;
@@ -55,6 +69,7 @@
     .correct {
       &.selected {
         color: @icon-correct-color;
+        border:@icon-correct-color 4px solid;
         content: "    "; /*IE8 fix*/
         .hotSpot-graphic-pin-icon {
           color: inherit;
@@ -66,6 +81,7 @@
   &.show-correct-answer {
     .incorrect {
       color:@item-disabled-color;
+      border:@item-disabled-color 4px solid;
       content:"     "; /*IE8 fix*/
       .hotSpot-graphic-pin-icon {
         color: inherit;
@@ -73,6 +89,7 @@
     }
     .correct {
       color:@icon-correct-color;
+      border:@icon-correct-color 4px solid;
       content:"      "; /*IE8 fix*/
       .hotSpot-graphic-pin-icon {
         color: inherit;
@@ -88,17 +105,28 @@
   .hotSpot-inner {
     .hotSpot-widget {
       &.before-submit {
-        .hotSpot-graphic-pin-icon {
+        .hotSpot-item {
           &:hover {
-            color: @item-hover-color;
+            border:@item-hover-color 4px solid;
+          }
+          .hotSpot-graphic-pin-icon {
+            &:hover {
+              color: @item-hover-color;
+            }
           }
         }
       }
 
       &.disabled {
-        .hotSpot-graphic-pin-icon {
+        .hotSpot-item {
           &:hover {
             cursor: default;
+          }
+
+          .hotSpot-graphic-pin-icon {
+            &:hover {
+              cursor: default;
+            }
           }
         }
       }

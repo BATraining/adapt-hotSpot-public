@@ -51,15 +51,19 @@ Setting this value to `true` will cause the `_items` to appear in a random order
 
 Defines the number of `_items` that can be selected.
 
-####imageUrl
+####_backgroundImage
 
-The hotSpot background image. Paths should be relative to the src folder, e.g.
+The backgroundImage represents hotSpot background image and contains `url`.
+
+####url
+
+Paths should be relative to the src folder, e.g.
 
 course/en/images/devices.png
 
 ####_items
 
-Each item represents one choice for the multiple choice question and contains values for `text`, `_shouldBeSelected` and `_graphic`.
+Each item represents one choice for the multiple choice question and contains `_left`, `_top`, `_shouldBeSelected` and `_graphic`.
 
 ####_shouldBeSelected
 
@@ -93,6 +97,7 @@ Enter width of hotSpot.
 ####_height
 
 Enter height of hotSpot.
+
 
 ####_top
 
