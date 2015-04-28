@@ -17,15 +17,17 @@
     "url": "course/en/images/devices.png"
   },
   "_items": [
-    {
+      {
       "_shouldBeSelected":false,
       "_graphic": {
         "alt": "Alt text for option 1",
         "large": "course/en/images/gqcq-1-large.gif",
         "small": "course/en/images/gqcq-1-small.gif"
       },
-      "_top": 33,
-      "_left":21.5
+      "_width": 12,
+      "_height": 12,
+      "_top": 30,
+      "_left": 17.5
     },
     {
       "_shouldBeSelected":false,
@@ -34,8 +36,10 @@
         "large": "course/en/images/gqcq-2-large.gif",
         "small": "course/en/images/gqcq-2-small.gif"
       },
-      "_top": 58.1,
-      "_left": 49
+      "_width": 10.8,
+      "_height": 22,
+      "_top": 49,
+      "_left": 46
     },
     {
       "_shouldBeSelected":true,
@@ -44,8 +48,10 @@
         "large": "course/en/images/gqcq-1-large.gif",
         "small": "course/en/images/gqcq-1-small.gif"
       },
-      "_top": 47.3,
-      "_left": 75.4
+      "_width": 13.6,
+      "_height": 11,
+      "_top": 45.3,
+      "_left": 70.4
     }
   ],
   "_feedback": {
