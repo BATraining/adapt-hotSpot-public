@@ -1,0 +1,108 @@
+{
+  "_id":"c-145",
+  "_parentId":"b-80",
+  "_type":"component",
+  "_component":"hotSpot",
+  "_classes":"",
+  "_layout":"full",
+  "_attempts":2,
+  "_questionWeight":1,
+  "_isRandom":false,
+  "_selectable":3,
+  "title": "HotSpot",
+  "displayTitle": "HotSpot",
+  "body": "Which of the following options would you consider to be correct?",
+  "instruction": "",
+  "_backgroundImage": {
+    "url": "course/en/images/devices.png"
+  },
+  "_items": [
+      {
+      "_shouldBeSelected":false,
+      "_graphic": {
+        "alt": "Alt text for option 1",
+        "large": "course/en/images/gqcq-1-large.gif",
+        "small": "course/en/images/gqcq-1-small.gif"
+      },
+      "_width": 12,
+      "_height": 12,
+      "_top": 30,
+      "_left": 17.5
+    },
+    {
+      "_shouldBeSelected":false,
+      "_graphic": {
+        "alt": "Alt text for option 2",
+        "large": "course/en/images/gqcq-2-large.gif",
+        "small": "course/en/images/gqcq-2-small.gif"
+      },
+      "_width": 10.8,
+      "_height": 22,
+      "_top": 49,
+      "_left": 46
+    },
+    {
+      "_shouldBeSelected":true,
+      "_graphic": {
+        "alt": "Alt text for option 3",
+        "large": "course/en/images/gqcq-1-large.gif",
+        "small": "course/en/images/gqcq-1-small.gif"
+      },
+      "_width": 13.6,
+      "_height": 11,
+      "_top": 45.3,
+      "_left": 70.4
+    }
+  ],
+  "_feedback": {
+    "correct": {
+      "title": "Congratulations!",
+      "body": "This is my long feedback"
+    },
+    "_incorrect": {
+      "notFinal": {
+        "title": "Incorrect!  Try again."
+      },
+      "final": {
+        "title": "Incorrect!  No more tries."
+      }
+    },
+    "_partlyCorrect": {
+      "notFinal": {
+        "title": "Partially correct!  Try again."
+      },
+      "final": {
+        "title": "Partially correct!  No more tries."
+      }
+    },
+    "body": "This should show for final incorrect and final partially correct, but it shouldn't for correct because correct has its own body attribute defined or not blank.."
+  },
+  "_buttons": {
+    "_submit": {
+      "buttonText": "Submit",
+      "ariaLabel": "Select here to submit your answer."
+    },
+    "_reset": {
+      "buttonText": "Reset",
+      "ariaLabel": ""
+    },
+    "_showCorrectAnswer": {
+      "buttonText": "Correct Answer",
+      "ariaLabel": ""
+    },
+    "_hideCorrectAnswer": {
+      "buttonText": "My Answer",
+      "ariaLabel": ""
+    },
+    "_showFeedback": {
+      "buttonText": "Show feedback",
+      "ariaLabel": ""
+    },
+    "remainingAttemptsText": "attempts remaining",
+    "remainingAttemptText": "final attempt",
+    "disabledAriaLabel": "This button is disabled at the moment"
+  },
+  "_pageLevelProgress": {
+    "_isEnabled": true
+  }
+}
