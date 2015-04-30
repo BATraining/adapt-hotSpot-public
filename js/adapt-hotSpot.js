@@ -8,17 +8,33 @@ define(function(require) {
     var Adapt = require('coreJS/adapt');
 
     var HotSpot = QuestionView.extend({
+
+        initialize: function() {
+            this.listenTo(Adapt, 'remove', this.remove);
+            this.listenTo(this.model, 'change:_isVisible', this.toggleVisibility);
+            //this.model.set('_globals', Adapt.course.get('_globals'));
+            this.setupQuestion();
+            if (Adapt.device.screenSize == 'large') {
+                this.render();
+            } else {
+                this.reRender();
+            }
+        },
+
         events: {
             "click .hotSpot-item": 'onItemSelected'
         },
 
+        // should be used instead of preRender
         setupQuestion: function() {
             // Check if items need to be randomised
+            this.listenTo(Adapt, 'device:changed', this.reRender, this);
             if (this.model.get('_isRandom') && this.model.get('_isEnabled')) {
                 this.model.set("_items", _.shuffle(this.model.get("_items")));
             }
         },
 
+        // used just like postRender is for presentational components
         onQuestionRendered: function() {
             //Check if image is loaded
             this.$('.hotSpot-background-image').imageready(_.bind(function() {
@@ -70,6 +86,7 @@ define(function(require) {
         },
 
         deselectAllItems: function() {
+
             _.each(this.model.get('_items'), function(item) {
                 item._isSelected = false;
                 item._isCorrect = false;
@@ -97,7 +114,7 @@ define(function(require) {
             }, this);
 
             var canSubmit = count > 0;
-
+            alert(canSubmit);
             if(canSubmit) {
                 this.$('.hotSpot-widget').removeClass('before-submit');
             }
@@ -204,8 +221,37 @@ define(function(require) {
             _.each(this.model.get('_items'), function(item, index) {
                 this.setOptionSelected(index, item._isCorrect, !item._isSelected);
             }, this);
-        }
+        },
 
+        reRender: function() {
+            if (Adapt.device.screenSize != 'large') {
+                this.replaceWithGmcq();
+            }
+        },
+
+        replaceWithGmcq:function(){
+            if (!Adapt.componentStore.gmcq) throw "Gmcq not included in build";
+            var Gmcq = Adapt.componentStore.gmcq;
+
+            var model = this.prepareGmcqModel();
+            var newGmcq = new Gmcq({model: model, $parent: this.options.$parent});
+            newGmcq.reRender();
+            //newGmcq.setupNarrative();
+            this.options.$parent.append(newGmcq.$el);
+            Adapt.trigger('device:resize');
+            this.remove();
+
+        },
+        prepareGmcqModel:function(){
+            var model = this.model;
+            console.log(model.get('_items'))
+            model.set('_component', 'gmcq');
+            model.set('_wasHotSpot', true);
+            model.set('body', model.get('body'));
+            model.set('instruction', model.get('instruction'));
+
+            return model;
+        }
     });
 
     Adapt.register("hotSpot", HotSpot);
