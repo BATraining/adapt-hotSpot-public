@@ -1,9 +1,9 @@
-<div class="hotSpot-inner component-inner" role="region">
+<div class="hotSpot-inner component-inner">
     {{> component this}}
     <div class="hotSpot-widget component-widget clearfix {{#unless _isSubmitted}}before-submit{{/unless}} {{#unless _isEnabled}} disabled {{#if _isComplete}} complete submitted show-user-answer {{#if _isCorrect}}correct{{/if}} {{/if}} {{/unless}}">
         <img class="hotSpot-background-image" src="{{_backgroundImage.url}}">
         {{#each _items}}
-        <div class="hotSpot-item component-item-text-color component-item {{#unless ../_isEnabled}} {{#if _isCorrect}}correct{{else}}incorrect{{/if}} {{/unless}} item-{{@index}} {{#if _isSelected}}selected{{/if}}" style="width: {{_width}}%;height: {{_height}}%;top:{{{_top}}}%; left:{{{_left}}}%;">
+        <div class="hotSpot-item component-item-text-color component-item {{#unless ../_isEnabled}} {{#if _isCorrect}}correct{{else}}incorrect{{/if}} {{/unless}} item-{{@index}} {{#if _isSelected}}selected{{/if}}" style="width:{{_width}}%;height: {{_height}}%;top:{{{_top}}}%; left:{{{_left}}}%;" aria-labelledby="{{../_id}}-{{@index}}-aria">
             <div class="hotSpot-graphic-pin">
                 <div class="hotSpot-graphic-pin-icon component-item-color icon icon-pin"></div>
             </div>
