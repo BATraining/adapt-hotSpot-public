@@ -9,14 +9,15 @@ define(function(require) {
 
     var HotSpot = QuestionView.extend({
 
-        initialize: function() {
+        initialize:function(){
             this.listenTo(Adapt, 'remove', this.remove);
             this.listenTo(this.model, 'change:_isVisible', this.toggleVisibility);
-            //this.model.set('_globals', Adapt.course.get('_globals'));
-            this.setupQuestion();
+            this.model.set('_globals', Adapt.course.get('_globals'));
+            this.preRender();
             if (Adapt.device.screenSize == 'large') {
                 this.render();
-            } else {
+            }
+            else{
                 this.reRender();
             }
         },
@@ -27,11 +28,15 @@ define(function(require) {
 
         // should be used instead of preRender
         setupQuestion: function() {
+
+            //this.listenTo(Adapt, 'remove', this.remove);
+            //this.listenTo(this.model, 'change:_isVisible', this.toggleVisibility);
             // Check if items need to be randomised
             this.listenTo(Adapt, 'device:changed', this.reRender, this);
             if (this.model.get('_isRandom') && this.model.get('_isEnabled')) {
                 this.model.set("_items", _.shuffle(this.model.get("_items")));
             }
+
         },
 
         // used just like postRender is for presentational components
@@ -114,7 +119,7 @@ define(function(require) {
             }, this);
 
             var canSubmit = count > 0;
-            alert(canSubmit);
+
             if(canSubmit) {
                 this.$('.hotSpot-widget').removeClass('before-submit');
             }
@@ -222,7 +227,6 @@ define(function(require) {
                 this.setOptionSelected(index, item._isCorrect, !item._isSelected);
             }, this);
         },
-
         reRender: function() {
             if (Adapt.device.screenSize != 'large') {
                 this.replaceWithGmcq();
@@ -230,8 +234,8 @@ define(function(require) {
         },
 
         replaceWithGmcq:function(){
-            if (!Adapt.componentStore.gmcq) throw "Gmcq not included in build";
-            var Gmcq = Adapt.componentStore.gmcq;
+            if (!Adapt.componentStore.gMcq) throw "GMcq not included in build";
+            var Gmcq = Adapt.componentStore.gMcq;
 
             var model = this.prepareGmcqModel();
             var newGmcq = new Gmcq({model: model, $parent: this.options.$parent});
@@ -245,7 +249,7 @@ define(function(require) {
         prepareGmcqModel:function(){
             var model = this.model;
             console.log(model.get('_items'))
-            model.set('_component', 'gmcq');
+            model.set('_component', 'gMcq');
             model.set('_wasHotSpot', true);
             model.set('body', model.get('body'));
             model.set('instruction', model.get('instruction'));
