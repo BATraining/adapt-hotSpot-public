@@ -19,6 +19,7 @@
   "_items": [
       {
       "_shouldBeSelected":false,
+      "_text":"Text for option 1",
       "_graphic": {
         "alt": "Alt text for option 1",
         "large": "course/en/images/gqcq-1-large.gif",
@@ -31,6 +32,7 @@
     },
     {
       "_shouldBeSelected":false,
+      "_text":"Text for option 2",
       "_graphic": {
         "alt": "Alt text for option 2",
         "large": "course/en/images/gqcq-2-large.gif",
@@ -43,6 +45,7 @@
     },
     {
       "_shouldBeSelected":true,
+      "_text":"Text for option 2",
       "_graphic": {
         "alt": "Alt text for option 3",
         "large": "course/en/images/gqcq-1-large.gif",
