@@ -95,7 +95,7 @@
             }
           },
           "_width":{
-            "type:"integer",
+            "type":"integer",
             "required":"",
             "default": "",
             "inputType": "integer",
@@ -103,7 +103,7 @@
             "help": "This is use to give size of hotspot"
           },
           "_width":{
-           "type:"integer",
+           "type":"integer",
            "required":"",
            "default": "",
            "inputType": "integer",
@@ -111,7 +111,7 @@
            "help": "This is use to give size of hotspot"
           },
           "_top":{
-            "type:"integer",
+            "type":"integer",
             "required":"",
             "default": "",
             "inputType": "integer",
@@ -119,7 +119,7 @@
             "help": "This is use to position of hotspot"
           },
           "_left":{
-            "type:"integer",
+            "type":"integer",
             "required":"",
             "default": "",
             "inputType": "integer",

@@ -16,21 +16,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-define(function(require) {
-    var QuestionView = require('coreViews/questionView');
-    var Adapt = require('coreJS/adapt');
+define([
+    'coreJS/adapt',
+    'coreViews/questionView'
+], function(Adapt, QuestionView) {
 
     var HotSpot = QuestionView.extend({
 
-        initialize:function(){
+        initialize: function() {
             this.listenTo(Adapt, 'remove', this.remove);
             this.listenTo(this.model, 'change:_isVisible', this.toggleVisibility);
             this.model.set('_globals', Adapt.course.get('_globals'));
             this.preRender();
             if (Adapt.device.screenSize == 'large') {
                 this.render();
-            }
-            else{
+            } else {
                 this.reRender();
             }
         },
@@ -41,15 +41,18 @@ define(function(require) {
 
         // should be used instead of preRender
         setupQuestion: function() {
+            this.model.set("_isRadio", (this.model.get('_selectable') === 1));
+            this.model.set('_selectedItems', []);
 
-            //this.listenTo(Adapt, 'remove', this.remove);
-            //this.listenTo(this.model, 'change:_isVisible', this.toggleVisibility);
-            // Check if items need to be randomised
             this.listenTo(Adapt, 'device:changed', this.reRender, this);
+            this.setupRandomisation();
+        },
+
+        // Check if items need to be randomised
+        setupRandomisation: function() {
             if (this.model.get('_isRandom') && this.model.get('_isEnabled')) {
                 this.model.set("_items", _.shuffle(this.model.get("_items")));
             }
-
         },
 
         // used just like postRender is for presentational components
@@ -62,32 +65,52 @@ define(function(require) {
 
         // Used by question to disable the question during submit and complete stages
         disableQuestion: function() {
+            this.setAllItemsEnabled(false);
         },
 
         // Used by question to enable the question during interactions
         enableQuestion: function() {
+            this.setAllItemsEnabled(true);
+        },
+
+        setAllItemsEnabled: function(isEnabled) {
+            _.each(this.model.get('_items'), function(item, index) {
+                var $itemLabel = this.$('label').eq(index);
+                var $itemInput = this.$('input').eq(index);
+
+                if (isEnabled) {
+                    $itemLabel.removeClass('disabled');
+                    $itemInput.prop('disabled', false);
+                } else {
+                    $itemLabel.addClass('disabled');
+                    $itemInput.prop('disabled', true);
+                }
+            }, this);
         },
 
         // Used by the question to reset the question when revisiting the component
         resetQuestionOnRevisit: function() {
+            this.setAllItemsEnabled(true);
             this.resetQuestion();
         },
 
         onItemSelected: function(event) {
-            if(event && event.preventDefault) event.preventDefault();
+            if (event && event.preventDefault) event.preventDefault();
 
             if (this.model.get('_isEnabled') && !this.model.get('_isSubmitted')) {
+                var selectedItems = this.model.get('_selectedItems');
                 var $hotSpotItem = $(event.currentTarget);
                 var hotSpotItemIndex = $hotSpotItem.index();
                 var isHotSpotItemSelected = $hotSpotItem.hasClass('selected');
                 var selectedHotSpotItem = this.model.get('_items')[hotSpotItemIndex - 1];
 
-                if(isHotSpotItemSelected) {
+                if (isHotSpotItemSelected) {
                     $hotSpotItem.removeClass('selected');
                     selectedHotSpotItem._isSelected = false;
                 } else {
                     if (this.model.get('_selectable') === 1) {
-                        this.$('.hotSpot-item').removeClass('selected')
+                        this.$('.hotSpot-item').removeClass('selected');
+                        this.deselectAllItems();
                     }
 
                     $hotSpotItem.addClass('selected');
@@ -104,7 +127,6 @@ define(function(require) {
         },
 
         deselectAllItems: function() {
-
             _.each(this.model.get('_items'), function(item) {
                 item._isSelected = false;
                 item._isCorrect = false;
@@ -133,7 +155,7 @@ define(function(require) {
 
             var canSubmit = count > 0;
 
-            if(canSubmit) {
+            if (canSubmit) {
                 this.$('.hotSpot-widget').removeClass('before-submit');
             }
 
@@ -146,6 +168,17 @@ define(function(require) {
         // This is important for returning or showing the users answer
         // This should preserve the state of the users answers
         storeUserAnswer: function() {
+            var userAnswer = [];
+
+            var items = this.model.get('_items').slice(0);
+            items.sort(function(a, b) {
+                return a._index - b._index;
+            });
+
+            _.each(items, function(item, index) {
+                userAnswer.push(item._isSelected);
+            }, this);
+            this.model.set('_userAnswer', userAnswer);
         },
 
         // Should return a boolean based upon whether to question is correct or not
@@ -194,9 +227,9 @@ define(function(require) {
         showMarking: function() {
             _.each(this.model.get('_items'), function(item, i) {
                 var $item = this.$('.component-item').eq(i);
-                $item.addClass(item._isCorrect ? 'correct' : 'incorrect');
+                $item.removeClass('correct incorrect').addClass(item._isCorrect ? 'correct' : 'incorrect');
 
-                if(!item._isSelected) {
+                if (!item._isSelected) {
                     $item.addClass('not-selected');
                 }
             }, this);
@@ -209,8 +242,7 @@ define(function(require) {
         },
 
         // Used by the question view to reset the stored user answer
-        resetUserAnswer: function() {
-        },
+        resetUserAnswer: function() {},
 
         // Used by the question to display the correct answer to the user
         showCorrectAnswer: function() {
@@ -221,7 +253,7 @@ define(function(require) {
 
         setOptionSelected: function(index, selected, isNotSelected) {
             var $hotSpotItem = this.$('.hotSpot-item').eq(index);
-            if(isNotSelected) {
+            if (isNotSelected) {
                 $hotSpotItem.addClass('not-selected');
             }
 
@@ -237,35 +269,44 @@ define(function(require) {
         // Should use the values stored in storeUserAnswer
         hideCorrectAnswer: function() {
             _.each(this.model.get('_items'), function(item, index) {
-                this.setOptionSelected(index, item._isCorrect, !item._isSelected);
+                this.setOptionSelected(index, this.model.get('_userAnswer')[item._index]);
             }, this);
         },
+
         reRender: function() {
             if (Adapt.device.screenSize != 'large') {
                 this.replaceWithGmcq();
             }
         },
 
-        replaceWithGmcq:function(){
+        replaceWithGmcq: function() {
             if (!Adapt.componentStore.gMcq) throw "GMcq not included in build";
             var Gmcq = Adapt.componentStore.gMcq;
 
             var model = this.prepareGmcqModel();
-            var newGmcq = new Gmcq({model: model, $parent: this.options.$parent});
-            newGmcq.reRender();
-            //newGmcq.setupNarrative();
-            this.options.$parent.append(newGmcq.$el);
-            Adapt.trigger('device:resize');
-            this.remove();
+            var newGmcq = new Gmcq({ model: model });
+            var $container = $(".component-container", $("." + this.model.get("_parentId")));
 
+            newGmcq.reRender();
+            if(model.get('_isSubmitted')) {
+                newGmcq.showMarking();
+            }
+
+            $container.append(newGmcq.$el);
+
+            Adapt.trigger('device:resize');
+            _.defer(_.bind(function () {
+                this.remove();
+            }, this));
         },
-        prepareGmcqModel:function(){
+
+        prepareGmcqModel: function() {
             var model = this.model;
-            console.log(model.get('_items'))
-            model.set('_component', 'gMcq');
-            model.set('_wasHotSpot', true);
-            model.set('body', model.get('body'));
-            model.set('instruction', model.get('instruction'));
+
+            model.set({
+                '_component': 'gMcq',
+                '_wasHotSpot': true
+            });
 
             return model;
         }

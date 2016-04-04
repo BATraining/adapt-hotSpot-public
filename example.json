@@ -1,14 +1,17 @@
 {
-  "_id":"c-145",
-  "_parentId":"b-80",
-  "_type":"component",
-  "_component":"hotSpot",
-  "_classes":"",
-  "_layout":"full",
-  "_attempts":2,
-  "_questionWeight":1,
-  "_isRandom":false,
-  "_selectable":3,
+  "_id": "c-145",
+  "_parentId": "b-80",
+  "_type": "component",
+  "_component": "hotSpot",
+  "_classes": "",
+  "_layout": "full",
+  "_attempts": 2,
+  "_shouldDisplayAttempts": false,
+  "_questionWeight": 1,
+  "_isRandom": false,
+  "_canShowModelAnswer": true,
+  "_recordInteraction": false,
+  "_selectable": 3,
   "title": "HotSpot",
   "displayTitle": "HotSpot",
   "body": "Which of the following options would you consider to be correct?",
@@ -17,9 +20,9 @@
     "url": "course/en/images/devices.png"
   },
   "_items": [
-      {
-      "_shouldBeSelected":false,
-      "_text":"Text for option 1",
+    {
+      "_shouldBeSelected": false,
+      "_text": "Text for option 1",
       "_graphic": {
         "alt": "Alt text for option 1",
         "large": "course/en/images/gqcq-1-large.gif",
@@ -31,8 +34,8 @@
       "_left": 17.5
     },
     {
-      "_shouldBeSelected":false,
-      "_text":"Text for option 2",
+      "_shouldBeSelected": false,
+      "_text": "Text for option 2",
       "_graphic": {
         "alt": "Alt text for option 2",
         "large": "course/en/images/gqcq-2-large.gif",
@@ -44,8 +47,8 @@
       "_left": 46
     },
     {
-      "_shouldBeSelected":true,
-      "_text":"Text for option 2",
+      "_shouldBeSelected": true,
+      "_text": "Text for option 2",
       "_graphic": {
         "alt": "Alt text for option 3",
         "large": "course/en/images/gqcq-1-large.gif",
@@ -58,27 +61,15 @@
     }
   ],
   "_feedback": {
-    "correct": {
-      "title": "Congratulations!",
-      "body": "This is my long feedback"
-    },
+    "correct": "Congratulations, this is the correct feedback.",
     "_incorrect": {
-      "notFinal": {
-        "title": "Incorrect!  Try again."
-      },
-      "final": {
-        "title": "Incorrect!  No more tries."
-      }
+      "notFinal": "",
+      "final": "This feedback will appear if you answered the question incorrectly."
     },
     "_partlyCorrect": {
-      "notFinal": {
-        "title": "Partially correct!  Try again."
-      },
-      "final": {
-        "title": "Partially correct!  No more tries."
-      }
-    },
-    "body": "This should show for final incorrect and final partially correct, but it shouldn't for correct because correct has its own body attribute defined or not blank.."
+      "notFinal": "",
+      "final": "This feedback will appear if you answered the question correctly."
+    }
   },
   "_buttons": {
     "_submit": {
@@ -102,8 +93,7 @@
       "ariaLabel": ""
     },
     "remainingAttemptsText": "attempts remaining",
-    "remainingAttemptText": "final attempt",
-    "disabledAriaLabel": "This button is disabled at the moment"
+    "remainingAttemptText": "final attempt"
   },
   "_pageLevelProgress": {
     "_isEnabled": true

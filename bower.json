@@ -1,18 +1,21 @@
 {
   "name": "adapt-hotSpot",
-  "version": "1.0.0",
+  "version": "1.1.0",
+  "framework": "^2.0.0",
   "homepage": "https://github.com/BATraining/adapt-hotSpot",
+  "issues": "https://github.com/BATraining/adapt-hotSpot/issues",
+  "repository": "git@github.com:BATraining/adapt-hotSpot.git",
   "authors": [
     "Amruta Thakur <amruta.thakur@exultcorp.com>"
   ],
+  "description": "A hotSpot multiple choice question component",
+  "main": "/js/adapt-hotSpot.js",
   "displayName" : "HotSpot Multiple Choice Question",
   "component" : "hotSpot",
   "assetFields" : [
     "_items[]._graphic.small",
     "_items[]._graphic.large"
   ],
-  "description": "A hotSpot multiple choice question component",
-  "main": "/js/adapt-hotSpot.js",
   "keywords": [
     "adapt-plugin",
     "adapt-component"
