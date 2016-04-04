@@ -2,27 +2,27 @@
     adapt-hotSpot
     Copyright (C) 2015 Bombardier Inc. (www.batraining.com)
     https://github.com/BATraining/adapt-hotSpot/blob/master/LICENSE
-   
+
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
-   
+
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
-   
+
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 --}}
-<div class="hotSpot-inner component-inner">
+<div class="hotSpot-inner component-inner" role="region" aria-label="{{_globals._components._hotSpot.ariaRegion}}" {{#if _globals._components._hotSpot.ariaRegion}}tabindex="0"{{/if}}>
     {{> component this}}
-    <div class="hotSpot-widget component-widget clearfix {{#unless _isSubmitted}}before-submit{{/unless}} {{#unless _isEnabled}} disabled {{#if _isComplete}} complete submitted show-user-answer {{#if _isCorrect}}correct{{/if}} {{/if}} {{/unless}}">
+    <div class="hotSpot-widget component-widget clearfix {{#unless _isSubmitted}}before-submit{{/unless}} {{#unless _isEnabled}} disabled {{#if _isInteractionComplete}} complete submitted show-user-answer {{#if _isCorrect}}correct{{/if}} {{/if}} {{/unless}}">
         <img class="hotSpot-background-image" src="{{_backgroundImage.url}}">
         {{#each _items}}
         <div class="hotSpot-item component-item-text-color component-item {{#unless ../_isEnabled}} {{#if _isCorrect}}correct{{else}}incorrect{{/if}} {{/unless}} item-{{@index}} {{#if _isSelected}}selected{{/if}}" style="width:{{_width}}%;height: {{_height}}%;top:{{{_top}}}%; left:{{{_left}}}%;" aria-labelledby="{{../_id}}-{{@index}}-aria">
-            <div class="hotSpot-graphic-pin">
+            <div class="hotSpot-graphic-pin{{#if ../_isRadio}} radio {{else}} checkbox{{/if}}">
                 <div class="hotSpot-graphic-pin-icon component-item-color icon icon-pin"></div>
             </div>
         </div>
