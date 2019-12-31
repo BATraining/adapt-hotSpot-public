@@ -58,10 +58,8 @@
     }
   ],
   "_feedback": {
-    "correct": {
-      "title": "Congratulations!",
-      "body": "This is my long feedback"
-    },
+      "title":"Feedback title",
+      "correct": "Feedback correct",
     "_incorrect": {
       "notFinal": {
         "title": "Incorrect!  Try again."
